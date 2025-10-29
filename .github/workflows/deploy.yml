@@ -5,6 +5,11 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+# Allow only one deployment at a time
+concurrency:
+  group: production-deployment
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -29,6 +34,7 @@ jobs:
       run: npm run build || echo "No build script"
 
     - name: Deploy to server
+      if: ${{ secrets.SERVER_HOST != '' }}
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -40,3 +46,7 @@ jobs:
           git pull origin main
           npm install --production
           pm2 restart karaoke-app || pm2 start server.js --name karaoke-app
+
+    - name: Skip deployment
+      if: ${{ secrets.SERVER_HOST == '' }}
+      run: echo "Server secrets not configured. Skipping deployment."
