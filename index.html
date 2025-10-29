@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karaoke Scoring App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Karaoke Scoring</h1>
+
+        <!-- YouTube Search Section -->
+        <div class="search-section">
+            <h2>Search YouTube</h2>
+            <input type="text" id="youtubeSearch" placeholder="Search YouTube for karaoke videos">
+            <button id="searchBtn">Search</button>
+            <div id="searchResults"></div>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="upload-section">
+            <h2>Upload Song</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="text" name="title" placeholder="Song Title" required>
+                <input type="text" name="artist" placeholder="Artist" required>
+                <textarea name="lyrics" placeholder="Lyrics (optional)"></textarea>
+                <input type="file" name="song" accept="audio/*" required>
+                <button type="submit">Upload Song</button>
+            </form>
+        </div>
+
+        <div class="player-section">
+            <h2>Player</h2>
+            <div id="youtubePlayer" style="display: none;"></div>
+            <audio id="audioPlayer" controls style="display: none;"></audio>
+            <div class="controls">
+                <button id="playPauseBtn">Play</button>
+                <select id="songSelect">
+                    <option value="">Select a song</option>
+                    <!-- Songs will be loaded dynamically -->
+                </select>
+            </div>
+        </div>
+        <div class="lyrics-section">
+            <div id="lyricsDisplay"></div>
+        </div>
+        <div class="score-section">
+            <h2>Score: <span id="score">0</span></h2>
+            <div id="realTimeScore"></div>
+        </div>
+        <div class="mic-section">
+            <button id="micBtn">Enable Microphone</button>
+            <div id="micStatus">Microphone: Disabled</div>
+        </div>
+    </div>
+
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
+</body>
+</html>
